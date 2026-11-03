@@ -73,7 +73,7 @@ class OpenCodePluginTest(unittest.TestCase):
                 result = self.run_plugin(mode)
                 self.assertEqual(0, result.returncode, result.stderr)
                 self.assertIn("ADHD MODE ACTIVE (always-on)", result.stdout)
-                self.assertIn("Working memory is small", result.stdout)
+                self.assertIn("The reader has ADHD.", result.stdout)
 
     def test_strips_frontmatter_with_trailing_whitespace(self):
         self.write_skill("---   \nname: fixture\n--- \t\nFixture body.\n")

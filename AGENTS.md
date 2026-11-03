@@ -16,7 +16,7 @@ Agents can access the complete project by reading repository-relative files afte
 
 | Area | Location | Purpose |
 | --- | --- | --- |
-| Canonical skill | `skills/i-have-adhd/SKILL.md` | The source of truth for the 9 ADHD-friendly response rules. |
+| Canonical skill | `skills/i-have-adhd/SKILL.md` | The source of truth for the ADHD-friendly response shape. |
 | Rule copies | `skills/i-have-adhd/agents/gemini.toml`, `INSTALL.md` (Codex and Copilot always-on snippets) | Condensed copies of the rules; update them when the skill changes. |
 | Claude and Codex metadata | `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/` | Plugin manifests and marketplace metadata. |
 | Shared hooks | `hooks/hooks.json`, `hooks/always-on.*`, `hooks/turn-reminder.mjs` | Hook declarations, opt-in always-on loading, and the per-message reminder while the rules are on. |

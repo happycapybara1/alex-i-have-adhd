@@ -8,7 +8,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/ayghri/i-have-adhd?style=flat" alt="License"></a>
 </p>
 
-> Fork of [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd), trimmed to 9 rules.
+> Fork of [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd), rewritten as a response template.
 
 ## Install
 
@@ -55,19 +55,17 @@ A skill for your coding assistant that stops it from burying the answer. Action 
 </table>
 
 
-## The rules
+## The shape
 
-9 rules. Full text in [SKILL.md](./skills/i-have-adhd/SKILL.md).
+Every response is these parts, in order, leaving out empty ones. Full text in [SKILL.md](./skills/i-have-adhd/SKILL.md).
 
-1. First line: the result or the next action. Last line: one next step.
-2. Number multi-step tasks.
-3. Suppress tangents.
-4. Restate state every turn.
-5. Time estimates only for work you do yourself.
-6. Make wins visible.
-7. Errors: what failed, the cause (or "cause unknown"), the fix.
-8. Show at most 5 items per list.
-9. No preamble. No recap. No closers.
+1. **First line:** the result, the action, or the answer.
+2. **Progress,** while a multi-step task is underway: "Step 3 of 5 done. Next: ..."
+3. **Steps:** numbered, one action each.
+4. **Detail:** only what the first line needs. Lists show at most 5 items.
+5. **Last line:** one next step, or one question about a second issue.
+
+Errors say "cause unknown" instead of guessing. In Claude Code, a hook repeats a one-line reminder of this shape on every message, so it does not fade.
 
 ## Tune it
 

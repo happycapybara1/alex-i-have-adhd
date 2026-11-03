@@ -106,19 +106,17 @@ Add to `~/.codex/AGENTS.md`:
 ```markdown
 ## Output style
 
-The reader has ADHD. Shape every response so it can be acted on:
+The reader has ADHD. Every response has this shape, leaving out empty parts:
 
-1. First line: the result if you did the work, or the next action (command, path, or snippet) if the reader must act. If anything is left open, end with one next action doable in under two minutes.
-2. Number multi-step work; one bounded action per step.
-3. Finish the current issue before raising a new one.
-4. Restate progress each turn ("step 3 of 5 done").
-5. Give time estimates only for steps the reader does, in concrete units.
-6. After a change, show what now works.
-7. Errors: location, cause, fix. If the evidence does not show the cause, say "cause unknown" and give the next diagnostic step.
-8. Show at most 5 items per list, then "N more: ... Want them?"
-9. No preamble, no recaps, no closers.
+1. First line: the result if you did the work, the action if the reader must act, or the answer to a question.
+2. While a multi-step task is in progress: "Step 3 of 5 done: <what>. Next: <what>."
+3. When the reader has more than one thing to do: a numbered list, one action per step, and a time estimate in concrete units for steps the reader does.
+4. Only the detail the first line needs. Lists show at most 5 items, then "N more: <what they are>. Want them?"
+5. If something is left open, the last line is one next step doable in under two minutes, or one question about a second issue.
 
-Exceptions: explain fully when asked to explain. Confirm before destructive actions. After three failed fixes, stop and name the doubtful assumption. If the request is ambiguous, ask one short question.
+Errors: what failed, the cause, the fix. If the evidence does not show the cause, say "cause unknown" and give the next diagnostic step. Start with part 1 and end after the last part that has content.
+
+Exceptions: explain fully when asked to explain. Confirm before destructive actions. After three failed fixes, name the doubtful assumption. If the request is ambiguous, ask one short question.
 ```
 
 </details>
@@ -228,19 +226,17 @@ Add the block below to `.github/copilot-instructions.md` in the project (Copilot
 ```markdown
 ## Output style
 
-The reader has ADHD. Shape every response so it can be acted on:
+The reader has ADHD. Every response has this shape, leaving out empty parts:
 
-1. First line: the result if you did the work, or the next action (command, path, or snippet) if the reader must act. If anything is left open, end with one next action doable in under two minutes.
-2. Number multi-step work; one bounded action per step.
-3. Finish the current issue before raising a new one.
-4. Restate progress each turn ("step 3 of 5 done").
-5. Give time estimates only for steps the reader does, in concrete units.
-6. After a change, show what now works.
-7. Errors: location, cause, fix. If the evidence does not show the cause, say "cause unknown" and give the next diagnostic step.
-8. Show at most 5 items per list, then "N more: ... Want them?"
-9. No preamble, no recaps, no closers.
+1. First line: the result if you did the work, the action if the reader must act, or the answer to a question.
+2. While a multi-step task is in progress: "Step 3 of 5 done: <what>. Next: <what>."
+3. When the reader has more than one thing to do: a numbered list, one action per step, and a time estimate in concrete units for steps the reader does.
+4. Only the detail the first line needs. Lists show at most 5 items, then "N more: <what they are>. Want them?"
+5. If something is left open, the last line is one next step doable in under two minutes, or one question about a second issue.
 
-Exceptions: explain fully when asked to explain. Confirm before destructive actions. After three failed fixes, stop and name the doubtful assumption. If the request is ambiguous, ask one short question.
+Errors: what failed, the cause, the fix. If the evidence does not show the cause, say "cause unknown" and give the next diagnostic step. Start with part 1 and end after the last part that has content.
+
+Exceptions: explain fully when asked to explain. Confirm before destructive actions. After three failed fixes, name the doubtful assumption. If the request is ambiguous, ask one short question.
 ```
 
 </details>
