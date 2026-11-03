@@ -510,6 +510,101 @@ class EvaluationHarnessTest(unittest.TestCase):
             self.assertNotEqual(ROOT.resolve(), where)
             self.assertFalse(str(where).startswith(str(ROOT.resolve())))
 
+    def _tool_case(self, **overrides):
+        case = {
+            "id": "tool-edit",
+            "category": "agent-autonomy",
+            "prompt": "Fix the typo in README.md.",
+            "risk": "medium",
+            "tools": ["Read", "Edit"],
+            "workspace": {"README.md": "Run it to recieve JSON.\n"},
+            "criteria": ["Fixes the typo itself."],
+        }
+        case.update(overrides)
+        return case
+
+    def test_tool_case_fields_are_validated(self):
+        self.assertEqual([], run_evals.validate_cases([self._tool_case()]))
+        bad = [
+            self._tool_case(id="t1", tools="Read"),
+            self._tool_case(id="t2", tools=[]),
+            self._tool_case(id="t3", workspace=["README.md"]),
+            self._tool_case(id="t4", workspace={"../escape.md": "x"}),
+            self._tool_case(id="t5", workspace={"/abs.md": "x"}),
+        ]
+        errors = run_evals.validate_cases(bad)
+        for case_id in ("t1", "t2", "t3", "t4", "t5"):
+            self.assertTrue(any(case_id in error for error in errors), (case_id, errors))
+
+    def _run_tool_case(self, tmp_path, runner):
+        cases = tmp_path / "cases.jsonl"
+        cases.write_text(json.dumps(self._tool_case()) + "\n", encoding="utf-8")
+        runner_config = tmp_path / "runners.json"
+        runner_config.write_text(json.dumps({"stub": runner}), encoding="utf-8")
+        output = tmp_path / "out.jsonl"
+        args = argparse.Namespace(
+            cases=cases,
+            runner_config=runner_config,
+            runner="stub",
+            condition="baseline",
+            condition_skill=None,
+            case=None,
+            trials=1,
+            retries=0,
+            budget_usd=1.0,
+            allow_unmetered=True,
+            output=output,
+        )
+        return args, output
+
+    def test_tool_case_gets_tools_and_its_workspace_diff_is_recorded(self):
+        # A case about the agent doing the work can only be graded if the agent
+        # can act, and the grader can see what it changed.
+        script = (
+            "import pathlib, sys; p = pathlib.Path('README.md'); "
+            "p.write_text(p.read_text().replace('recieve', 'receive')); "
+            "print(' '.join(sys.argv[1:-1]))"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            args, output = self._run_tool_case(
+                tmp_path,
+                {
+                    "command": [sys.executable, "-c", script, "--tools", ""],
+                    "response_format": "text",
+                    "tools_flag": "--tools",
+                    "tool_mode_args": ["--permission-mode", "acceptEdits"],
+                },
+            )
+
+            self.assertEqual(0, run_evals.run_evaluations(args))
+
+            row = run_evals.read_jsonl(output)[0]
+            self.assertIn("--tools Read,Edit", row["response"])
+            self.assertIn("--permission-mode acceptEdits", row["response"])
+            self.assertIn("-Run it to recieve JSON.", row["workspace_diff"])
+            self.assertIn("+Run it to receive JSON.", row["workspace_diff"])
+
+    def test_tool_case_is_rejected_for_a_runner_without_tool_support(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            marker = tmp_path / "ran"
+            args, output = self._run_tool_case(
+                tmp_path,
+                {
+                    "command": [
+                        sys.executable,
+                        "-c",
+                        f"from pathlib import Path; Path({str(marker)!r}).touch()",
+                    ],
+                    "response_format": "text",
+                },
+            )
+
+            with self.assertRaisesRegex(RuntimeError, "tool"):
+                run_evals.run_evaluations(args)
+            self.assertFalse(marker.exists())
+
     def test_completed_keys_support_resuming_partial_runs(self):
         rows = [
             {

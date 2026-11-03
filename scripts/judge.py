@@ -146,7 +146,15 @@ def group_responses(rows: list[dict[str, Any]]) -> dict[tuple, dict[str, str]]:
     """Collect responses into {(case_id, trial): {condition: response}} groups."""
     groups: dict[tuple, dict[str, str]] = defaultdict(dict)
     for row in rows:
-        groups[(row["case_id"], row["trial"])][row["condition"]] = row["response"]
+        text = row["response"]
+        if "workspace_diff" in row:
+            # Tool cases are graded on what the agent did, not only what it said.
+            diff = row["workspace_diff"] or "(no files changed)"
+            text += (
+                "\n\n<workspace_changes note=\"recorded by the eval harness after the run; "
+                f"not part of the reply\">\n{diff}\n</workspace_changes>"
+            )
+        groups[(row["case_id"], row["trial"])][row["condition"]] = text
     return dict(groups)
 
 

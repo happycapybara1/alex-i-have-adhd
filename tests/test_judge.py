@@ -47,6 +47,33 @@ class GroupingTest(unittest.TestCase):
         self.assertEqual({"baseline": "51", "candidate": "102"}, groups[("direct-answer", 1)])
         self.assertEqual({"baseline": "again"}, groups[("direct-answer", 2)])
 
+    def test_recorded_workspace_changes_reach_the_grader(self):
+        # Tool cases are graded on what the agent did, not only on what it said.
+        rows = [
+            {
+                "case_id": "agent-owned-edit",
+                "trial": 1,
+                "condition": "baseline",
+                "response": "Fixed the typo.",
+                "workspace_diff": "-recieve\n+receive\n",
+            },
+            {
+                "case_id": "agent-owned-edit",
+                "trial": 1,
+                "condition": "candidate",
+                "response": "Fixed the typo.",
+                "workspace_diff": "",
+            },
+        ]
+
+        groups = judge.group_responses(rows)
+        baseline = groups[("agent-owned-edit", 1)]["baseline"]
+        candidate = groups[("agent-owned-edit", 1)]["candidate"]
+
+        self.assertIn("+receive", baseline)
+        self.assertIn("not part of the reply", baseline)
+        self.assertIn("no files changed", candidate)
+
     def test_groups_missing_a_condition_are_partitioned_out_not_dropped(self):
         groups = {
             ("direct-answer", 1): {"baseline": "x", "candidate": "y"},

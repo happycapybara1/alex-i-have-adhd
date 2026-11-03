@@ -15,7 +15,12 @@
       ""
     ],
     "response_format": "claude-json",
-    "budget_flag": "--max-budget-usd"
+    "budget_flag": "--max-budget-usd",
+    "tools_flag": "--tools",
+    "tool_mode_args": [
+      "--permission-mode",
+      "acceptEdits"
+    ]
   },
   "codex": {
     "command": [

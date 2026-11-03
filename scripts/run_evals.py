@@ -3,6 +3,7 @@
 
 import argparse
 from contextlib import contextmanager
+import difflib
 import json
 import math
 import shlex
@@ -12,7 +13,7 @@ import tempfile
 import time
 from collections import Counter, defaultdict
 from collections.abc import Iterator
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Optional
 
 
@@ -95,7 +96,77 @@ def validate_cases(cases: list[dict[str, Any]]) -> list[str]:
             errors.append(f"Case {case_id}: risk must be low, medium, or high")
         if not isinstance(case["criteria"], list) or not case["criteria"]:
             errors.append(f"Case {case_id}: criteria must be a non-empty list")
+        if "tools" in case and (
+            not isinstance(case["tools"], list)
+            or not case["tools"]
+            or not all(isinstance(tool, str) and tool for tool in case["tools"])
+        ):
+            errors.append(f"Case {case_id}: tools must be a non-empty list of tool names")
+        if "workspace" in case:
+            workspace = case["workspace"]
+            if not isinstance(workspace, dict) or not all(
+                isinstance(name, str) and isinstance(body, str) for name, body in workspace.items()
+            ):
+                errors.append(f"Case {case_id}: workspace must map file paths to file contents")
+            else:
+                for name in workspace:
+                    parts = PurePosixPath(name).parts
+                    if not name or name.startswith("/") or ".." in parts:
+                        errors.append(
+                            f"Case {case_id}: workspace path {name!r} must stay inside the workspace"
+                        )
     return errors
+
+
+def _tool_invocation(command: list[str], runner: dict[str, Any], tools: list[str]) -> list[str]:
+    """Return the runner command with the case's tools enabled.
+
+    Runners disable tools by default so text-only cases stay comparable; a tool
+    case swaps the value after `tools_flag` and adds `tool_mode_args` (for
+    example, auto-accepting edits so a non-interactive run can act).
+    """
+    flag = runner["tools_flag"]
+    invocation = list(command)
+    if flag in invocation[:-1]:
+        invocation[invocation.index(flag) + 1] = ",".join(tools)
+    else:
+        invocation.extend([flag, ",".join(tools)])
+    invocation.extend(runner.get("tool_mode_args", []))
+    return invocation
+
+
+def _write_workspace(root: Path, workspace: dict[str, str]) -> None:
+    for name, body in workspace.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(body, encoding="utf-8")
+
+
+def _workspace_diff(root: Path, workspace: dict[str, str]) -> str:
+    """Unified diff of every file the run changed, created, or deleted."""
+    current = {
+        path.relative_to(root).as_posix(): path
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    }
+    chunks: list[str] = []
+    for name in sorted(set(workspace) | set(current)):
+        before = workspace.get(name)
+        try:
+            after = current[name].read_text(encoding="utf-8") if name in current else None
+        except UnicodeDecodeError:
+            after = "<binary file>\n"
+        if before == after:
+            continue
+        chunks.extend(
+            difflib.unified_diff(
+                (before or "").splitlines(keepends=True),
+                (after or "").splitlines(keepends=True),
+                fromfile=f"a/{name}" if before is not None else "/dev/null",
+                tofile=f"b/{name}" if after is not None else "/dev/null",
+            )
+        )
+    return "".join(chunks)
 
 
 def _validate_score(row: dict[str, Any], index: int) -> None:
@@ -405,6 +476,14 @@ def run_evaluations(args: argparse.Namespace) -> int:
     if args.budget_usd <= 0 or args.budget_usd > 25:
         raise ValueError("--budget-usd must be greater than 0 and no more than 25")
 
+    selected = [case for case in cases if not args.case or case["id"] in args.case]
+    tool_cases = [case["id"] for case in selected if case.get("tools")]
+    if tool_cases and not runner.get("tools_flag"):
+        raise RuntimeError(
+            f"Runner {args.runner!r} has no tools_flag, so it cannot run tool cases: "
+            f"{', '.join(tool_cases)}. Pass --case to skip them."
+        )
+
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("a", encoding="utf-8") as destination:
         for trial in range(1, args.trials + 1):
@@ -421,12 +500,18 @@ def run_evaluations(args: argparse.Namespace) -> int:
                     return 2
                 prompt = _condition_prompt(case["prompt"], args.condition, args.condition_skill)
                 invocation = [*command]
+                if case.get("tools"):
+                    invocation = _tool_invocation(invocation, runner, case["tools"])
                 if runner.get("budget_flag"):
                     invocation.extend([runner["budget_flag"], f"{remaining:.4f}"])
                 invocation.append(prompt)
+                workspace = case.get("workspace")
                 completed = None
+                workspace_diff = None
                 for attempt in range(args.retries + 1):
                     with _neutral_cwd() as cwd:
+                        if workspace:
+                            _write_workspace(Path(cwd), workspace)
                         completed = subprocess.run(
                             invocation,
                             check=False,
@@ -435,6 +520,8 @@ def run_evaluations(args: argparse.Namespace) -> int:
                             cwd=cwd,
                             stdin=subprocess.DEVNULL,
                         )
+                        if workspace is not None or case.get("tools"):
+                            workspace_diff = _workspace_diff(Path(cwd), workspace or {})
                     if completed.returncode == 0:
                         break
                     if attempt < args.retries:
@@ -468,6 +555,8 @@ def run_evaluations(args: argparse.Namespace) -> int:
                     "usage": usage,
                     "cost_usd": cost,
                 }
+                if workspace_diff is not None:
+                    row["workspace_diff"] = workspace_diff
                 destination.write(json.dumps(row, ensure_ascii=False) + "\n")
                 destination.flush()
                 print(f"{args.condition} trial {trial}: {case['id']}")
