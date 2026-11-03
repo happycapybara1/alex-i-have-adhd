@@ -65,12 +65,7 @@ Preserve existing installation methods, invocation names, file locations, opt-in
 
 A breaking change requires an issue, migration path, updated documentation, and a compatibility or deprecation plan. Prefer additive, staged changes.
 
-`skills/i-have-adhd/SKILL.md` is canonical. When it changes, synchronize the Cursor copy:
-
-```sh
-cp skills/i-have-adhd/SKILL.md .cursor/skills/i-have-adhd/SKILL.md
-cmp skills/i-have-adhd/SKILL.md .cursor/skills/i-have-adhd/SKILL.md
-```
+`skills/i-have-adhd/SKILL.md` is canonical. When it changes, update the condensed copies in `skills/i-have-adhd/agents/gemini.toml` and the Codex and Copilot always-on snippets in `INSTALL.md`.
 
 Review platform-specific manifests and documentation whenever shared names, descriptions, paths, or behavior change.
 
