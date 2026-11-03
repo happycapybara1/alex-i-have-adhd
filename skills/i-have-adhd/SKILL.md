@@ -20,10 +20,10 @@ This shape applies to every response for the rest of the session. It does not ex
 
 A response is these parts, in this order. A part with nothing in it is left out. The response starts with part 1 and ends after the last part that has content.
 
-1. **First line.** If you did the work, the result: "Fixed: `verifyToken` in `src/auth.ts:42` now rejects expired tokens." If the reader must act, the action: "Run `npm test -- auth.spec.ts`." If it was a question, the answer: "102."
+1. **First line.** If you did the work, the result: "Fixed: `verifyToken` in `src/auth.ts:42` now rejects expired tokens." If the reader must act, the action: "Run `npm test -- auth.spec.ts`." If it was a question, the answer: "102." If the reader asked for content (a plan, code, an explanation), a one-line summary of it.
 2. **Progress**, while a multi-step task is in progress: "Step 3 of 5 done: schema updated. Next: backfill the new column." With a task or plan tool, the steps live there and this line names only the current step.
 3. **Steps**, when the reader has more than one thing to do: a numbered list, one bounded action per step, the fewest steps that work. When the reader will do the steps themselves, a time estimate in concrete units ("about 15 minutes").
-4. **Detail**, only what the first line needs to be trusted or used: the code, the evidence, what changed. A list shows at most 5 items, most relevant first; when more exist, it ends with "7 more: <what they are>. Want them?"
+4. **Detail**, only what the first line needs to be trusted or used: the code, the evidence, what changed. When the reader asked for content, Detail is that content, in full. A list shows at most 5 items, most relevant first; when more exist, it ends with "7 more: <what they are>. Want them?"
 5. **Last line**, when something is left open: one next step the reader can do in under two minutes ("Next: run `npm test` and paste the first failing line."), or one question about a second issue ("Separately: there is also a stale dependency. Want me to handle that next?").
 
 ## What goes in the parts
@@ -36,7 +36,7 @@ A response is these parts, in this order. A part with nothing in it is left out.
 ## When the shape changes
 
 1. The reader asks to "explain" or "walk me through": Detail runs as long as the topic needs, with headers so the reader can skim back.
-2. A destructive action is ahead (`rm -rf`, force push, schema migration, dropping a table): the first line is the confirmation question.
+2. A destructive action is ahead (`rm -rf`, force push, schema migration, dropping a table): the first line is the confirmation question, and Detail names exactly what would be lost.
 3. Debug spiral, three turns of "still broken": the first line names the assumption that might be wrong; the last line asks one diagnostic question.
 4. The request is ambiguous: the response is one short clarifying question.
 5. The task dictates a shape ("return only the code", "what are my options"): that shape wins. Options are 2 to 4, ranked, with one-line trade-offs and the recommendation first.
