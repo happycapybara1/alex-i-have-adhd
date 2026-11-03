@@ -19,7 +19,7 @@ Agents can access the complete project by reading repository-relative files afte
 | Canonical skill | `skills/i-have-adhd/SKILL.md` | The source of truth for the 9 ADHD-friendly response rules. |
 | Rule copies | `skills/i-have-adhd/agents/gemini.toml`, `INSTALL.md` (Codex and Copilot always-on snippets) | Condensed copies of the rules; update them when the skill changes. |
 | Claude and Codex metadata | `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/` | Plugin manifests and marketplace metadata. |
-| Shared hooks | `hooks/hooks.json`, `hooks/always-on.*` | Hook declarations and cross-platform always-on behavior. |
+| Shared hooks | `hooks/hooks.json`, `hooks/always-on.*`, `hooks/turn-reminder.mjs` | Hook declarations, opt-in always-on loading, and the per-message reminder while the rules are on. |
 | OpenCode | `.opencode/` | Auto-discovered plugin and command entry points for V1 (1.18.29+) and V2. |
 | Gemini CLI | `gemini-extension.json`, `GEMINI.md`, `skills/i-have-adhd/agents/gemini.toml` | Extension metadata, always-on context file, and opt-in command. |
 | Documentation | `README.md`, `INSTALL.md` | User-facing overview and installation. |
@@ -32,7 +32,7 @@ When debugging or changing one integration, begin with its entry point:
 
 | Runtime | Read first |
 | --- | --- |
-| Claude Code | `.claude-plugin/plugin.json`, `hooks/hooks.json`, `hooks/always-on.mjs` |
+| Claude Code | `.claude-plugin/plugin.json`, `hooks/hooks.json`, `hooks/always-on.mjs`, `hooks/turn-reminder.mjs` |
 | Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`, `hooks/hooks.json` |
 | OpenCode | `.opencode/plugins/i-have-adhd.mjs`, `.opencode/plugins/i-have-adhd.js`, `.opencode/command/i-have-adhd.md` |
 | GitHub Copilot | `skills/i-have-adhd/SKILL.md` (read natively as an Agent Skill) |

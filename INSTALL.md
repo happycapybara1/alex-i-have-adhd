@@ -12,6 +12,8 @@ claude plugin install i-have-adhd@i-have-adhd
 
 Type `/i-have-adhd`.
 
+While the rules are on, a hook adds a one-line reminder of the response shape to each message you send, so the rules do not fade in long sessions. It turns off with "stop adhd mode". Hooks need `node` on your `PATH`.
+
 ### Verify
 
 ```bash
@@ -312,7 +314,7 @@ If `XDG_CONFIG_HOME` is set, replace `~/.config` in these paths with that direct
 ## How activation works
 
 1. **Installed, not invoked.** Nothing happens until you invoke the skill. Claude Code and Copilot honor `disable-model-invocation: true` in `SKILL.md`; Codex honors `policy.allow_implicit_invocation: false` in `agents/openai.yaml`.
-2. **You invoke it explicitly.** Type `/i-have-adhd` in Claude Code, Copilot, Gemini CLI, or OpenCode, or `$i-have-adhd` in Codex. Rules stay on for that session. "stop adhd mode" or "normal mode" turns them off.
+2. **You invoke it explicitly.** Type `/i-have-adhd` in Claude Code, Copilot, Gemini CLI, or OpenCode, or `$i-have-adhd` in Codex. Rules stay on for that session. In Claude Code, a hook repeats a one-line reminder of the response shape on every message. "stop adhd mode" or "normal mode" turns them off.
 3. **You turn on always-on.** Claude Code: `touch ~/.claude/.i-have-adhd-always`. OpenCode: `touch ~/.config/opencode/.i-have-adhd-always`. Gemini CLI: install the extension route. Codex and Copilot: paste the always-on snippet from their section.
 
 If you did not turn it on, it is off.
