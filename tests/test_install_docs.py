@@ -1,4 +1,4 @@
-"""Checks installation paths in INSTALL.md and translations."""
+"""Checks installation paths in INSTALL.md."""
 
 import pathlib
 import re
@@ -15,9 +15,7 @@ class ClaudeCodeUpdateTest(unittest.TestCase):
         # `claude plugin update` runs, so the docs must never offer the first alone.
         refresh = "claude plugin marketplace update i-have-adhd"
         update = "claude plugin update i-have-adhd@i-have-adhd"
-        translations = sorted((ROOT / ".github/install").glob("INSTALL.*.md"))
-        self.assertTrue(translations, "No translated installation guides found")
-        for path in [ROOT / "INSTALL.md", *translations]:
+        for path in [ROOT / "INSTALL.md"]:
             with self.subTest(file=path.name):
                 text = path.read_text(encoding="utf8")
                 self.assertIn(update, text)
@@ -28,9 +26,7 @@ class ClaudeCodeUpdateTest(unittest.TestCase):
 
 class ZedInstallPathTest(unittest.TestCase):
     def test_zed_install_paths(self):
-        translations = sorted((ROOT / ".github/install").glob("INSTALL.*.md"))
-        self.assertTrue(translations, "No translated installation guides found")
-        for path in [ROOT / "INSTALL.md", *translations]:
+        for path in [ROOT / "INSTALL.md"]:
             with self.subTest(file=path.name):
                 text = path.read_text(encoding="utf8")
                 marker = "<summary><strong>Zed</strong></summary>"
@@ -57,7 +53,7 @@ class GrokInstallPathTest(unittest.TestCase):
         self.assertIn("</details>", section)
         section = section.split("</details>", 1)[0]
 
-        self.assertIn("grok plugin install ayghri/i-have-adhd --trust", section)
+        self.assertIn("grok plugin install happycapybara1/i-have-adhd --trust", section)
         self.assertIn("grok plugin enable i-have-adhd", section)
         self.assertIn("grok plugin update i-have-adhd", section)
         self.assertIn("grok plugin uninstall i-have-adhd --confirm", section)

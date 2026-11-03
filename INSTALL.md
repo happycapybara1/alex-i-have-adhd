@@ -6,7 +6,7 @@
 ### Install
 
 ```bash
-agy plugin install https://github.com/ayghri/i-have-adhd
+agy plugin install https://github.com/happycapybara1/i-have-adhd
 ```
 
 ### Verify
@@ -19,7 +19,7 @@ agy plugin list
 
 ```bash
 agy plugin uninstall i-have-adhd
-agy plugin install https://github.com/ayghri/i-have-adhd
+agy plugin install https://github.com/happycapybara1/i-have-adhd
 ```
 
 ### Uninstall
@@ -67,7 +67,7 @@ this skill. Check the exported instructions before enabling it.
 
 ### Install
 
-1. Download the [canonical SKILL.md](https://raw.githubusercontent.com/ayghri/i-have-adhd/main/skills/i-have-adhd/SKILL.md) and save it as `SKILL.md`. Review its contents before uploading.
+1. Download the [canonical SKILL.md](https://raw.githubusercontent.com/happycapybara1/i-have-adhd/main/skills/i-have-adhd/SKILL.md) and save it as `SKILL.md`. Review its contents before uploading.
 2. In AstronClaw, open **我的技能 (My skills)**, choose **新建 (New)**, and upload that `.md` file.
 3. Check that the imported skill is named `i-have-adhd`. Use **启用/禁用 (Enable/Disable)** to control its availability.
 
@@ -119,7 +119,7 @@ new conversation. To keep the imported copy for later, choose **Disable** instea
 ### Install
 
 ```bash
-claude plugin marketplace add ayghri/i-have-adhd
+claude plugin marketplace add happycapybara1/i-have-adhd
 claude plugin install i-have-adhd@i-have-adhd
 ```
 
@@ -182,7 +182,7 @@ The hook only fires when the flag file exists, so installing the plugin changes 
 ### Install
 
 ```bash
-codex plugin marketplace add ayghri/i-have-adhd --ref main
+codex plugin marketplace add happycapybara1/i-have-adhd --ref main
 codex plugin add i-have-adhd@i-have-adhd
 ```
 
@@ -244,7 +244,7 @@ Grok loads the repository's existing plugin and skill files; no separate Grok ma
 ### Install
 
 ```bash
-grok plugin install ayghri/i-have-adhd --trust
+grok plugin install happycapybara1/i-have-adhd --trust
 grok plugin enable i-have-adhd
 ```
 
@@ -307,7 +307,7 @@ Gemini CLI has no plugin marketplace, so there are two native routes: a **custom
 
 ```bash
 mkdir -p ~/.gemini/commands
-curl -fsSL https://raw.githubusercontent.com/ayghri/i-have-adhd/main/skills/i-have-adhd/agents/gemini.toml \
+curl -fsSL https://raw.githubusercontent.com/happycapybara1/i-have-adhd/main/skills/i-have-adhd/agents/gemini.toml \
   -o ~/.gemini/commands/i-have-adhd.toml
 ```
 
@@ -316,7 +316,7 @@ Start a new session, type `/i-have-adhd`. It stays on for that session.
 ### Install (extension, always-on)
 
 ```bash
-gemini extensions install https://github.com/ayghri/i-have-adhd
+gemini extensions install https://github.com/happycapybara1/i-have-adhd
 ```
 
 The extension loads `GEMINI.md`, which imports the full skill, so the rules apply from message one. `git` must be installed.
@@ -354,14 +354,14 @@ Copilot reads Agent Skills natively: the same `SKILL.md`, no conversion. It scan
 ### Install
 
 ```bash
-npx skills add ayghri/i-have-adhd -a github-copilot        # this project
-npx skills add ayghri/i-have-adhd -a github-copilot -g     # all projects
+npx skills add happycapybara1/i-have-adhd -a github-copilot        # this project
+npx skills add happycapybara1/i-have-adhd -a github-copilot -g     # all projects
 ```
 
 Without the CLI, copy the skill folder into any directory Copilot scans:
 
 ```bash
-git clone https://github.com/ayghri/i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd
 mkdir -p ~/.copilot/skills
 cp -R i-have-adhd/skills/i-have-adhd ~/.copilot/skills/
 ```
@@ -427,7 +427,7 @@ Exceptions: explain fully when asked to explain. Confirm before destructive acti
 ### Install
 
 ```bash
-hermes skills install ayghri/i-have-adhd/skills/i-have-adhd
+hermes skills install happycapybara1/i-have-adhd/skills/i-have-adhd
 ```
 
 Type `/i-have-adhd`. The skill installs into `~/.hermes/skills/` and is exposed as a slash command at the next session start.
@@ -435,9 +435,9 @@ Type `/i-have-adhd`. The skill installs into `~/.hermes/skills/` and is exposed 
 Prefer to browse first? Add this repo as a skill source (a "tap"), then search and install:
 
 ```bash
-hermes skills tap add ayghri/i-have-adhd
+hermes skills tap add happycapybara1/i-have-adhd
 hermes skills search adhd
-hermes skills install ayghri/i-have-adhd/skills/i-have-adhd
+hermes skills install happycapybara1/i-have-adhd/skills/i-have-adhd
 ```
 
 ### Verify
@@ -458,7 +458,7 @@ hermes skills update i-have-adhd
 hermes skills uninstall i-have-adhd
 ```
 
-Or remove the tap too: `hermes skills tap remove ayghri/i-have-adhd`.
+Or remove the tap too: `hermes skills tap remove happycapybara1/i-have-adhd`.
 
 ### Always-on (optional)
 
@@ -494,7 +494,7 @@ Start a Kimi Code session, then:
 
 1. Run `/plugins`.
 2. Choose **Custom**.
-3. Paste `https://github.com/ayghri/i-have-adhd` and press `Enter`.
+3. Paste `https://github.com/happycapybara1/i-have-adhd` and press `Enter`.
 4. Choose **Trust and install**.
 
 Use slash command `/skill:i-have-adhd` to invoke the skill explicitly.
@@ -520,7 +520,7 @@ The plugin supports OpenCode V1 **1.18.29+** and V2. It registers the skill and 
 For use across projects:
 
 ```bash
-git clone https://github.com/ayghri/i-have-adhd ~/.config/opencode/vendor/i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd ~/.config/opencode/vendor/i-have-adhd
 mkdir -p ~/.config/opencode/plugins
 cat > ~/.config/opencode/plugins/i-have-adhd.js <<'EOF'
 export { default } from '../vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs';
@@ -583,7 +583,7 @@ Pi discovers this repository as a native package: `extensions/` provides the ses
 ### Install
 
 ```bash
-pi install https://github.com/ayghri/i-have-adhd
+pi install https://github.com/happycapybara1/i-have-adhd
 ```
 
 Start a new Pi session. Toggle ADHD-friendly output for the current session:
@@ -625,7 +625,7 @@ Confirm the GitHub package is listed, then type `/i-have-adhd` and check that `�
 ### Update
 
 ```bash
-pi update https://github.com/ayghri/i-have-adhd
+pi update https://github.com/happycapybara1/i-have-adhd
 ```
 
 Or update every unpinned Pi package with `pi update --extensions`.
@@ -633,7 +633,7 @@ Or update every unpinned Pi package with `pi update --extensions`.
 ### Uninstall
 
 ```bash
-pi remove https://github.com/ayghri/i-have-adhd
+pi remove https://github.com/happycapybara1/i-have-adhd
 ```
 
 ### Always-on (optional)
@@ -679,7 +679,7 @@ If `PI_CODING_AGENT_DIR` is set, put `.i-have-adhd-always` in that directory ins
 ### Install
 
 ```bash
-omp plugin marketplace add ayghri/i-have-adhd
+omp plugin marketplace add happycapybara1/i-have-adhd
 omp plugin install --scope user i-have-adhd@i-have-adhd
 ```
 
@@ -708,7 +708,7 @@ omp plugin marketplace remove i-have-adhd
 ### Install
 
 ```bash
-qwen extensions install ayghri/i-have-adhd
+qwen extensions install happycapybara1/i-have-adhd
 ```
 
 Qwen Code supports the GitHub shorthand and installs the repository as a
@@ -755,7 +755,7 @@ Zed's Agent reads Agent Skills natively using the same SKILL.md format without c
 In the Agent Panel, open the Skills manager and choose **Create skill from URL** (also in the command palette as `agent: create skill from url`), then paste:
 
 ```
-https://github.com/ayghri/i-have-adhd/blob/main/skills/i-have-adhd/SKILL.md
+https://github.com/happycapybara1/i-have-adhd/blob/main/skills/i-have-adhd/SKILL.md
 ```
 
 Save it in **User** scope for every project, or **Project** scope for one. Then type `/i-have-adhd` in the Agent Panel.
@@ -763,7 +763,7 @@ Save it in **User** scope for every project, or **Project** scope for one. Then 
 Prefer the filesystem? Clone the repo and drop the skill folder into your user skills directory:
 
 ```bash
-git clone https://github.com/ayghri/i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd
 mkdir -p ~/.agents/skills
 cp -R i-have-adhd/skills/i-have-adhd ~/.agents/skills/
 ```
@@ -813,10 +813,10 @@ Works with any harness that reads agent skills. Swap `-a <agent>` for yours.
 ### Install
 
 ```bash
-npx skills add ayghri/i-have-adhd                  # this workspace
-npx skills add ayghri/i-have-adhd -g               # all projects
-npx skills add ayghri/i-have-adhd -a cursor -y     # one agent only
-npx skills add ayghri/i-have-adhd -a opencode -y
+npx skills add happycapybara1/i-have-adhd                  # this workspace
+npx skills add happycapybara1/i-have-adhd -g               # all projects
+npx skills add happycapybara1/i-have-adhd -a cursor -y     # one agent only
+npx skills add happycapybara1/i-have-adhd -a opencode -y
 ```
 
 New agent chat, type `/i-have-adhd`.
@@ -824,7 +824,7 @@ New agent chat, type `/i-have-adhd`.
 Without the CLI, copy the skill folder into whatever path your agent scans:
 
 ```bash
-git clone https://github.com/ayghri/i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd
 mkdir -p ~/.cursor/skills     # Cursor. Use .agents/skills for OpenCode, or your agent's own path
 cp -R i-have-adhd/skills/i-have-adhd ~/.cursor/skills/
 ```
