@@ -6,7 +6,7 @@
 ### Install
 
 ```bash
-claude plugin marketplace add happycapybara1/alex-i-have-adhd
+claude plugin marketplace add happycapybara1/i-have-adhd-alex
 claude plugin install alex-i-have-adhd@alex-i-have-adhd
 ```
 
@@ -71,7 +71,7 @@ The hook only fires when the flag file exists, so installing the plugin changes 
 ### Install
 
 ```bash
-codex plugin marketplace add happycapybara1/alex-i-have-adhd --ref main
+codex plugin marketplace add happycapybara1/i-have-adhd-alex --ref main
 codex plugin add alex-i-have-adhd@alex-i-have-adhd
 ```
 
@@ -131,7 +131,7 @@ Gemini CLI has no plugin marketplace, so there are two native routes: a **custom
 
 ```bash
 mkdir -p ~/.gemini/commands
-curl -fsSL https://raw.githubusercontent.com/happycapybara1/alex-i-have-adhd/main/skills/i-have-adhd/agents/gemini.toml \
+curl -fsSL https://raw.githubusercontent.com/happycapybara1/i-have-adhd-alex/main/skills/i-have-adhd/agents/gemini.toml \
   -o ~/.gemini/commands/i-have-adhd.toml
 ```
 
@@ -140,7 +140,7 @@ Start a new session, type `/i-have-adhd`. It stays on for that session.
 ### Install (extension, always-on)
 
 ```bash
-gemini extensions install https://github.com/happycapybara1/alex-i-have-adhd
+gemini extensions install https://github.com/happycapybara1/i-have-adhd-alex
 ```
 
 The extension loads `GEMINI.md`, which imports the full skill, so the rules apply from message one. `git` must be installed.
@@ -178,14 +178,14 @@ Copilot reads Agent Skills natively: the same `SKILL.md`, no conversion. It scan
 ### Install
 
 ```bash
-npx skills add happycapybara1/alex-i-have-adhd -a github-copilot        # this project
-npx skills add happycapybara1/alex-i-have-adhd -a github-copilot -g     # all projects
+npx skills add happycapybara1/i-have-adhd-alex -a github-copilot        # this project
+npx skills add happycapybara1/i-have-adhd-alex -a github-copilot -g     # all projects
 ```
 
 Without the CLI, copy the skill folder into any directory Copilot scans:
 
 ```bash
-git clone https://github.com/happycapybara1/alex-i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd-alex
 mkdir -p ~/.copilot/skills
 cp -R i-have-adhd/skills/i-have-adhd ~/.copilot/skills/
 ```
@@ -252,7 +252,7 @@ The plugin supports OpenCode V1 **1.18.29+** and V2. It registers the skill and 
 For use across projects:
 
 ```bash
-git clone https://github.com/happycapybara1/alex-i-have-adhd ~/.config/opencode/vendor/i-have-adhd
+git clone https://github.com/happycapybara1/i-have-adhd-alex ~/.config/opencode/vendor/i-have-adhd
 mkdir -p ~/.config/opencode/plugins
 cat > ~/.config/opencode/plugins/i-have-adhd.js <<'EOF'
 export { default } from '../vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs';
@@ -330,7 +330,7 @@ If you did not turn it on, it is off.
 ```bash
 claude plugin uninstall i-have-adhd@i-have-adhd
 claude plugin marketplace remove i-have-adhd
-claude plugin marketplace add happycapybara1/alex-i-have-adhd
+claude plugin marketplace add happycapybara1/i-have-adhd-alex
 claude plugin install alex-i-have-adhd@alex-i-have-adhd
 ```
 
