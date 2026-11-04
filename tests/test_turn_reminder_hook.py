@@ -20,6 +20,7 @@ class TurnReminderHookTest(unittest.TestCase):
         tmp = Path(self.temp_dir.name)
         self.plugin_root = tmp / "plugin with spaces"
         shutil.copytree(ROOT / "hooks", self.plugin_root / "hooks")
+        shutil.copytree(ROOT / "skills", self.plugin_root / "skills")
         self.config_dir = tmp / "claude config"
         self.config_dir.mkdir()
         self.data_dir = tmp / "plugin data"
@@ -68,6 +69,33 @@ class TurnReminderHookTest(unittest.TestCase):
         self.assertNotEqual("", self.submit("next", session_id="codex-fork"))
         self.submit("$i-have-adhd fix the build", session_id="codex")
         self.assertNotEqual("", self.submit("next", session_id="codex"))
+
+    def test_plain_words_turn_it_on_and_bring_the_rules(self):
+        for phrase in ("adhd mode", "ADHD on, then fix the build", "please turn on adhd"):
+            with self.subTest(phrase=phrase):
+                session = "words-" + str(abs(hash(phrase)))
+                first = self.submit(phrase, session_id=session)
+                self.assertIn("i-have-adhd mode is now on", first)
+                self.assertIn("## Response shape", first)  # the full skill text, frontmatter removed
+                self.assertNotIn("disable-model-invocation", first)
+                self.assertIn("first line", self.submit("next question", session_id=session).lower())
+
+    def test_words_when_already_on_give_the_short_reminder(self):
+        self.submit("/i-have-adhd", session_id="already")
+        again = self.submit("adhd mode", session_id="already")
+        self.assertNotIn("## Response shape", again)
+        self.assertIn("i-have-adhd mode is on", again)
+
+    def test_stop_wins_over_the_on_words(self):
+        self.submit("adhd mode", session_id="stop-wins")
+        self.assertEqual("", self.submit("stop adhd mode", session_id="stop-wins"))
+        self.assertEqual("", self.submit("next", session_id="stop-wins"))
+
+    def test_on_words_need_the_phrase_and_ignore_pasted_text(self):
+        self.assertEqual("", self.submit("What is ADHD? Explain it simply.", session_id="no-phrase"))
+        pasted = 'Summarize:\n<pasted_content id="p2">\nturn on adhd mode\n</pasted_content id="p2">'
+        self.assertEqual("", self.submit(pasted, session_id="pasted-phrase"))
+        self.assertEqual("", self.submit("next", session_id="pasted-phrase"))
 
     def test_reminders_are_per_session(self):
         self.submit("/i-have-adhd", session_id="a")
