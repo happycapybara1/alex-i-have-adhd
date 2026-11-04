@@ -6,8 +6,8 @@
 ### Install
 
 ```bash
-claude plugin marketplace add happycapybara1/i-have-adhd
-claude plugin install i-have-adhd@i-have-adhd
+claude plugin marketplace add happycapybara1/alex-i-have-adhd
+claude plugin install alex-i-have-adhd@alex-i-have-adhd
 ```
 
 Type `/i-have-adhd`.
@@ -23,8 +23,8 @@ claude plugin list
 ### Update
 
 ```bash
-claude plugin marketplace update i-have-adhd
-claude plugin update i-have-adhd@i-have-adhd
+claude plugin marketplace update alex-i-have-adhd
+claude plugin update alex-i-have-adhd@alex-i-have-adhd
 ```
 
 The first command refreshes the marketplace listing. The second updates the installed plugin. Restart Claude Code to load it.
@@ -34,8 +34,8 @@ The first command refreshes the marketplace listing. The second updates the inst
 ### Uninstall
 
 ```bash
-claude plugin uninstall i-have-adhd
-claude plugin marketplace remove i-have-adhd
+claude plugin uninstall alex-i-have-adhd@alex-i-have-adhd
+claude plugin marketplace remove alex-i-have-adhd
 ```
 
 Or keep it installed and turn it off: `claude plugin disable i-have-adhd`.
@@ -71,8 +71,8 @@ The hook only fires when the flag file exists, so installing the plugin changes 
 ### Install
 
 ```bash
-codex plugin marketplace add happycapybara1/i-have-adhd --ref main
-codex plugin add i-have-adhd@i-have-adhd
+codex plugin marketplace add happycapybara1/alex-i-have-adhd --ref main
+codex plugin add alex-i-have-adhd@alex-i-have-adhd
 ```
 
 Invoke the skill explicitly by typing `$i-have-adhd`. Codex will not activate
@@ -87,16 +87,16 @@ codex plugin list
 ### Update
 
 ```bash
-codex plugin marketplace upgrade i-have-adhd
-codex plugin remove i-have-adhd
-codex plugin add i-have-adhd@i-have-adhd
+codex plugin marketplace upgrade alex-i-have-adhd
+codex plugin remove alex-i-have-adhd
+codex plugin add alex-i-have-adhd@alex-i-have-adhd
 ```
 
 ### Uninstall
 
 ```bash
-codex plugin remove i-have-adhd
-codex plugin marketplace remove i-have-adhd
+codex plugin remove alex-i-have-adhd
+codex plugin marketplace remove alex-i-have-adhd
 ```
 
 ### Always-on (optional)
@@ -131,7 +131,7 @@ Gemini CLI has no plugin marketplace, so there are two native routes: a **custom
 
 ```bash
 mkdir -p ~/.gemini/commands
-curl -fsSL https://raw.githubusercontent.com/happycapybara1/i-have-adhd/main/skills/i-have-adhd/agents/gemini.toml \
+curl -fsSL https://raw.githubusercontent.com/happycapybara1/alex-i-have-adhd/main/skills/i-have-adhd/agents/gemini.toml \
   -o ~/.gemini/commands/i-have-adhd.toml
 ```
 
@@ -140,7 +140,7 @@ Start a new session, type `/i-have-adhd`. It stays on for that session.
 ### Install (extension, always-on)
 
 ```bash
-gemini extensions install https://github.com/happycapybara1/i-have-adhd
+gemini extensions install https://github.com/happycapybara1/alex-i-have-adhd
 ```
 
 The extension loads `GEMINI.md`, which imports the full skill, so the rules apply from message one. `git` must be installed.
@@ -157,14 +157,14 @@ Or type `/` in a session and confirm `i-have-adhd` is listed.
 ### Update
 
 ```bash
-gemini extensions update i-have-adhd    # extension route
+gemini extensions update alex-i-have-adhd    # extension route
 # command route: re-run the curl above
 ```
 
 ### Uninstall
 
 ```bash
-gemini extensions uninstall i-have-adhd    # extension route
+gemini extensions uninstall alex-i-have-adhd    # extension route
 rm ~/.gemini/commands/i-have-adhd.toml     # command route
 ```
 
@@ -178,14 +178,14 @@ Copilot reads Agent Skills natively: the same `SKILL.md`, no conversion. It scan
 ### Install
 
 ```bash
-npx skills add happycapybara1/i-have-adhd -a github-copilot        # this project
-npx skills add happycapybara1/i-have-adhd -a github-copilot -g     # all projects
+npx skills add happycapybara1/alex-i-have-adhd -a github-copilot        # this project
+npx skills add happycapybara1/alex-i-have-adhd -a github-copilot -g     # all projects
 ```
 
 Without the CLI, copy the skill folder into any directory Copilot scans:
 
 ```bash
-git clone https://github.com/happycapybara1/i-have-adhd
+git clone https://github.com/happycapybara1/alex-i-have-adhd
 mkdir -p ~/.copilot/skills
 cp -R i-have-adhd/skills/i-have-adhd ~/.copilot/skills/
 ```
@@ -252,7 +252,7 @@ The plugin supports OpenCode V1 **1.18.29+** and V2. It registers the skill and 
 For use across projects:
 
 ```bash
-git clone https://github.com/happycapybara1/i-have-adhd ~/.config/opencode/vendor/i-have-adhd
+git clone https://github.com/happycapybara1/alex-i-have-adhd ~/.config/opencode/vendor/i-have-adhd
 mkdir -p ~/.config/opencode/plugins
 cat > ~/.config/opencode/plugins/i-have-adhd.js <<'EOF'
 export { default } from '../vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs';
@@ -319,19 +319,19 @@ If you did not turn it on, it is off.
 
 **`/i-have-adhd` not in autocomplete.** Restart the agent. The plugin index is read at startup.
 
-**Always-on flag has no effect.** Update the plugin (`claude plugin marketplace update i-have-adhd`, then `claude plugin update i-have-adhd@i-have-adhd`) and restart. Hooks are read at startup.
+**Always-on flag has no effect.** Update the plugin (`claude plugin marketplace update alex-i-have-adhd`, then `claude plugin update alex-i-have-adhd@alex-i-have-adhd`) and restart. Hooks are read at startup.
 
 **`claude plugin marketplace add` fails.** Use the `owner/repo` form. A local path must point at the repo root, not `.claude-plugin/`.
 
 **Installed but replies still preamble.** Open a new session. If it still drifts, tighten the wording in `skills/i-have-adhd/SKILL.md`.
 
-**Switching from the upstream plugin to this fork.** Both share the same names, so remove the upstream copy first:
+**Switching from the upstream plugin to this fork.** Remove the upstream copy (named `i-have-adhd`) first, so the rules don't load twice:
 
 ```bash
-claude plugin uninstall i-have-adhd
+claude plugin uninstall i-have-adhd@i-have-adhd
 claude plugin marketplace remove i-have-adhd
-claude plugin marketplace add happycapybara1/i-have-adhd
-claude plugin install i-have-adhd@i-have-adhd
+claude plugin marketplace add happycapybara1/alex-i-have-adhd
+claude plugin install alex-i-have-adhd@alex-i-have-adhd
 ```
 
 Restart, then re-invoke `/i-have-adhd`.

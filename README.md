@@ -15,7 +15,7 @@
 Copy/paste into your CLI prompt:
 
 ```text
-Install the i-have-adhd skill/plugin from https://github.com/happycapybara1/i-have-adhd, refer to the repo's AGENTS.md for instructions.
+Install the i-have-adhd skill/plugin from https://github.com/happycapybara1/alex-i-have-adhd, refer to the repo's AGENTS.md for instructions.
 ```
 
 Or 🔗 [check the installation instructions](INSTALL.md).
@@ -72,10 +72,10 @@ Errors say "cause unknown" instead of guessing. In Claude Code, a hook repeats a
 Fork, edit `skills/i-have-adhd/SKILL.md`, then swap your copy in:
 
 ```bash
-claude plugin uninstall i-have-adhd            # drop the upstream copy first:
-claude plugin marketplace remove i-have-adhd   # fork and upstream share both names
-claude plugin marketplace add <your-username>/i-have-adhd
-claude plugin install i-have-adhd@i-have-adhd
+claude plugin uninstall i-have-adhd@i-have-adhd    # drop the upstream copy, if you have it
+claude plugin marketplace remove i-have-adhd
+claude plugin marketplace add <your-username>/alex-i-have-adhd
+claude plugin install alex-i-have-adhd@alex-i-have-adhd
 ```
 
 Restart your coding assistant, then re-invoke `/i-have-adhd`.

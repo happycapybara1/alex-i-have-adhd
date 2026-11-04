@@ -62,6 +62,10 @@ class TurnReminderHookTest(unittest.TestCase):
     def test_namespaced_and_codex_invocations_count(self):
         self.submit("/i-have-adhd:i-have-adhd", session_id="claude-plugin")
         self.assertNotEqual("", self.submit("next", session_id="claude-plugin"))
+        self.submit("/alex-i-have-adhd:i-have-adhd", session_id="fork-plugin")
+        self.assertNotEqual("", self.submit("next", session_id="fork-plugin"))
+        self.submit("$alex-i-have-adhd:i-have-adhd", session_id="codex-fork")
+        self.assertNotEqual("", self.submit("next", session_id="codex-fork"))
         self.submit("$i-have-adhd fix the build", session_id="codex")
         self.assertNotEqual("", self.submit("next", session_id="codex"))
 

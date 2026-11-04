@@ -3,7 +3,7 @@
 // full skill text has scrolled far back or been compacted away.
 //
 // On when: the reader invoked the skill this session (/i-have-adhd,
-// /i-have-adhd:i-have-adhd, or Codex's $i-have-adhd), or the always-on flag
+// /alex-i-have-adhd:i-have-adhd, or Codex's $i-have-adhd), or the always-on flag
 // $CLAUDE_CONFIG_DIR/.i-have-adhd-always exists. Off after "stop adhd mode"
 // or "normal mode" until the skill is invoked again.
 // Never blocks the prompt: any failure exits 0 with no output.
@@ -20,7 +20,7 @@ const REMINDER =
   "If anything is left open, the last line names one next step. " +
   "No preamble, recap, or closing pleasantries.";
 
-const INVOKE = /^\s*[/$]i-have-adhd(?::i-have-adhd)?(?=\s|$)/i;
+const INVOKE = /^\s*[/$](?:(?:alex-)?i-have-adhd:)?i-have-adhd(?=\s|$)/i;
 const STOP = /\b(?:stop adhd mode|normal mode)\b/i;
 const PASTED = /<pasted_content id="[^"]*">[\s\S]*?<\/pasted_content id="[^"]*">/g;
 

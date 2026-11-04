@@ -14,7 +14,7 @@ class ClaudeCodeUpdateTest(unittest.TestCase):
         # listing; the installed copy stays at its old version until
         # `claude plugin update` runs, so the docs must never offer the first alone.
         refresh = "claude plugin marketplace update i-have-adhd"
-        update = "claude plugin update i-have-adhd@i-have-adhd"
+        update = "claude plugin update alex-i-have-adhd@alex-i-have-adhd"
         for path in [ROOT / "INSTALL.md"]:
             with self.subTest(file=path.name):
                 text = path.read_text(encoding="utf8")
