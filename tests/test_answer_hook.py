@@ -1,4 +1,4 @@
-"""Ticking "ADHD mode" in a question (alex-ring asks one) turns the mode on."""
+"""Ticking "ADHD mode" in a question (the alex-plugins-home ring asks one) turns the mode on."""
 
 import json
 import os

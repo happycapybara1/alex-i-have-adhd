@@ -1,4 +1,4 @@
-// PostToolUse hook for AskUserQuestion: when the user ticks "ADHD mode" (alex-ring's
+// PostToolUse hook for AskUserQuestion: when the user ticks "ADHD mode" (the alex-plugins-home ring's
 // question offers it), turn i-have-adhd on for this session and give Claude the
 // rules, as saying "adhd mode" does. The skill is manual-only, so Claude can't
 // load it itself. A multi-select answer is one string of comma-joined labels.
