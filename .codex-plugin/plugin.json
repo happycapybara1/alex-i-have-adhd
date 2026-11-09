@@ -6,8 +6,8 @@
     "name": "Ayoub G.",
     "url": "https://github.com/ayghri"
   },
-  "homepage": "https://github.com/happycapybara1/i-have-adhd-alex",
-  "repository": "https://github.com/happycapybara1/i-have-adhd-alex",
+  "homepage": "https://github.com/happycapybara1/alex-i-have-adhd",
+  "repository": "https://github.com/happycapybara1/alex-i-have-adhd",
   "license": "MIT",
   "keywords": [
     "adhd",
@@ -26,7 +26,7 @@
     "capabilities": [
       "Instructions"
     ],
-    "websiteURL": "https://github.com/happycapybara1/i-have-adhd-alex",
+    "websiteURL": "https://github.com/happycapybara1/alex-i-have-adhd",
     "defaultPrompt": [
       "Use i-have-adhd for this task.",
       "Make this answer action-first and easy to execute.",

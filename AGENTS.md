@@ -1,6 +1,6 @@
 # Agent guide
 
-This file is the map for agents working with [i-have-adhd](https://github.com/happycapybara1/i-have-adhd-alex). Read it after locating or installing the repository. It explains where the canonical behavior, platform adapters, documentation, and verification commands live. It does not replace the skill rules in `skills/i-have-adhd/SKILL.md`.
+This file is the map for agents working with [i-have-adhd](https://github.com/happycapybara1/alex-i-have-adhd). Read it after locating or installing the repository. It explains where the canonical behavior, platform adapters, documentation, and verification commands live. It does not replace the skill rules in `skills/i-have-adhd/SKILL.md`.
 
 ## Start here
 
