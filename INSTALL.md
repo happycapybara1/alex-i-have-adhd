@@ -310,7 +310,7 @@ If `XDG_CONFIG_HOME` is set, replace `~/.config` in these paths with that direct
 ## How activation works
 
 1. **Installed, not invoked.** Nothing happens until you invoke the skill. Claude Code and Copilot honor `disable-model-invocation: true` in `SKILL.md`; Codex honors `policy.allow_implicit_invocation: false` in `agents/openai.yaml`.
-2. **You invoke it explicitly.** Type `/i-have-adhd` in Claude Code, Copilot, Gemini CLI, or OpenCode, or `$i-have-adhd` in Codex. In Claude Code, saying "adhd mode" works too. Rules stay on for that session. In Claude Code, a hook repeats a one-line reminder of the response shape on every message. "stop adhd mode" or "normal mode" turns them off.
+2. **You invoke it explicitly.** Type `/i-have-adhd` in Claude Code, Copilot, Gemini CLI, or OpenCode, or `$i-have-adhd` in Codex. In Claude Code, saying "adhd mode" works too, and so does ticking "ADHD mode" when [alex-ring](https://github.com/happycapybara1/alex-plugins) asks which plugins to load. Rules stay on for that session. In Claude Code, a hook repeats a one-line reminder of the response shape on every message. "stop adhd mode" or "normal mode" turns them off.
 3. **You turn on always-on.** Claude Code: `touch ~/.claude/.i-have-adhd-always`. OpenCode: `touch ~/.config/opencode/.i-have-adhd-always`. Gemini CLI: install the extension route. Codex and Copilot: paste the always-on snippet from their section.
 
 If you did not turn it on, it is off.
